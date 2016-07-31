@@ -4,7 +4,7 @@
 
 -- Setting directories
 local appdir = "ux0:/data/Eucliod"
-
+local rsrcdir = appdir.."/rsrc"
 local scrdir = appdir.."/screenshots"
 local lvldir = appdir.."/levels"
 
@@ -80,3 +80,48 @@ local KEY_TRIANGLE = SCE_CTRL_TRIANGLE
 local KEY_CIRCLE = SCE_CTRL_CIRCLE
 local KEY_START = SCE_CTRL_START
 local KEY_SELECT = SCE_CTRL_SELECT
+
+keymap={}; keymap2={}
+keymap[KEY_CIRCLE]=0; keymap2[0] = KEY_CIRCLE
+keymap[KEY_CROSS]=1; keymap2[1] = KEY_CROSS
+keymap[KEY_SQUARE]=2; keymap2[2] = KEY_SQUARE 
+keymap[KEY_TRIANGLE]=3; keymap2[3] = KEY_TRIANGLE 
+keymap[SCE_CTRL_LTRIGGER]=4; keymap2[4] = SCE_CTRL_LTRIGGER 
+keymap[SCE_CTRL_RTRIGGER]=5; keymap2[5] = SCE_CTRL_RTRIGGER
+--keymap[KEY_ZL]=6; keymap2[6] = KEY_ZL 
+--keymap[KEY_ZR]=7; keymap2[7] = KEY_ZR 
+
+local KEY_FIRE = KEY_SQUARE
+local KEY_FIRE2 = KEY_CROSS
+local KEY_WEAPON = KEY_TRIANGLE
+local KEY_FOCUS = SCE_CTRL_RTRIGGER
+
+
+
+if System.doesFileExist(appdir.."/config.dat") then
+	local file_config = io.open(appdir.."/config.dat",FREAD)
+	local filesize = io.size(file_config)
+	local str = io.read(file_config,0,filesize)
+	io.close(file_config)
+	
+	local b_fire = tonumber(string.sub(str, 1,1)); if b_fire ~= nil and keymap2[b_fire]~=nil then KEY_FIRE = keymap2[b_fire] end
+	--local b_altf = tonumber(string.sub(str, 1,1)); if b_altf ~= nil and keymap2[b_altf]~=nil then KEY_FIRE2 = keymap2[b_altf] end
+	local b_wepo = tonumber(string.sub(str, 2,2)); if b_wepo ~= nil and keymap2[b_wepo]~=nil then KEY_WEAPON = keymap2[b_wepo] end
+	local b_focu = tonumber(string.sub(str, 3,3)); if b_focu ~= nil and keymap2[b_focu]~=nil then KEY_FOCUS = keymap2[b_focu] end
+	local theme_ = tonumber(string.sub(str, 4,4)); if theme_ ~= nil then theme = theme_ end
+else
+	local file_config = io.open(appdir.."/config.dat",FCREATE)
+	io.write(file_config, 0, keymap[KEY_FIRE]..keymap[KEY_WEAPON]..keymap[KEY_FOCUS]..theme, 4)
+	io.close(file_config)
+end
+
+Graphics_initBlend()
+
+img_load = Graphics.loadImage(rsrcdir..'/load.png')
+Graphics_fillRect(0, 960, 0, 544, themedb.bg[theme])
+
+Graphics_drawPartialImage(154,86, 0,0, 92,86, img_load, themedb.ship[theme])
+Graphics_drawPartialImage(154,86, 92,0, 92,86, img_load, themedb.bullet[theme])
+Graphics_drawPartialImage(154,86, 184,0, 92,86, img_load)
+Graphics_termBlend()
+Screen_flip()
