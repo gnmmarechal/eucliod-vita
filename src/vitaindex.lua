@@ -64,13 +64,13 @@ themedb.hit2[3] = 178
 
 
 -- Localize all most used functions and variables so they will be accessed faster
-local Graphics_drawImage = Screen.drawImage
+local Graphics_drawImage = Graphics.drawImage
 local Screen_flip = Screen.flip
-local Graphics_drawPartialImage = Screen.drawPartialImage
-local Graphics_drawLine = Screen.drawLine
-local Graphics_fillRect = Screen.fillRect
-local Graphics_initBlend = Screen.initBlend
-local Graphics_termBlend = Screen.termBlend
+local Graphics_drawPartialImage = Graphics.drawPartialImage
+local Graphics_drawLine = Graphics.drawLine
+local Graphics_fillRect = Graphics.fillRect
+local Graphics_initBlend = Graphics.initBlend
+local Graphics_termBlend = Graphics.termBlend
 local Controls_read = Controls.read
 local Controls_check = Controls.check
 local Controls_readTouch = Controls.readTouch
@@ -119,9 +119,12 @@ Graphics_initBlend()
 
 img_load = Graphics.loadImage(rsrcdir..'/load.png')
 Graphics_fillRect(0, 960, 0, 544, themedb.bg[theme])
-
+-- Unchanged coords
 Graphics_drawPartialImage(154,86, 0,0, 92,86, img_load, themedb.ship[theme])
 Graphics_drawPartialImage(154,86, 92,0, 92,86, img_load, themedb.bullet[theme])
 Graphics_drawPartialImage(154,86, 184,0, 92,86, img_load)
 Graphics_termBlend()
 Screen_flip()
+
+local pad = Controls_read()
+local oldpad = pad
