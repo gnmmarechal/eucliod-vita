@@ -101,7 +101,7 @@ local KEY_FOCUS = SCE_CTRL_RTRIGGER
 if System.doesFileExist(appdir.."/config.dat") then
 	local file_config = io.open(appdir.."/config.dat",FREAD)
 	local filesize = io.size(file_config)
-	local str = io.read(file_config,0,filesize)
+	local str = io.read(file_config,filesize)
 	io.close(file_config)
 	
 	local b_fire = tonumber(string.sub(str, 1,1)); if b_fire ~= nil and keymap2[b_fire]~=nil then KEY_FIRE = keymap2[b_fire] end
@@ -111,7 +111,7 @@ if System.doesFileExist(appdir.."/config.dat") then
 	local theme_ = tonumber(string.sub(str, 4,4)); if theme_ ~= nil then theme = theme_ end
 else
 	local file_config = io.open(appdir.."/config.dat",FCREATE)
-	io.write(file_config, 0, keymap[KEY_FIRE]..keymap[KEY_WEAPON]..keymap[KEY_FOCUS]..theme, 4)
+	io.write(file_config, keymap[KEY_FIRE]..keymap[KEY_WEAPON]..keymap[KEY_FOCUS]..theme, 4)
 	io.close(file_config)
 end
 
@@ -329,7 +329,7 @@ function loadlevel(num)
 
 	local f = io.open(lvldir.."/level"..num..".dat",FREAD)
 	local filesize = io.size(f)
-	local str = io.read(f,0,filesize)
+	local str = io.read(f,filesize)
 	io.close(f)
 	
 	--"|T-######|enemy|direction|px|"
@@ -839,7 +839,7 @@ while true do
 					menu_selector = 0
 					--save keybind and theme configurations
 					local file_config = io.open(rotdir.."/config.dat",FCREATE)
-					io.write(file_config, 0, keymap[KEY_FIRE]..keymap[KEY_WEAPON]..keymap[KEY_FOCUS]..theme, 4)
+					io.write(file_config, keymap[KEY_FIRE]..keymap[KEY_WEAPON]..keymap[KEY_FOCUS]..theme, 4)
 					io.close(file_config)
 				end
 			else 
