@@ -257,7 +257,7 @@ while i<load_filecount do --load them one by one on each frame of the loading sc
 	end
 	i=i+1
 	Screen_waitVblankStart()
-	Graphics_initBlend(TOP_SCREEN)
+	Graphics_initBlend()
 	Graphics_fillRect(0, 400, 0, 240, themedb.bg[theme])
 	Graphics_drawPartialImage(154,86, 0,0, 92,86, img_load, themedb.ship[theme])
 	Graphics_drawPartialImage(154,86, 92,0, 92,86, img_load, themedb.bullet[theme])
@@ -395,7 +395,7 @@ function menu_init()
 		difficulty = 1
 		level_select = 1
 	end
-	Graphics_initBlend(BOTTOM_SCREEN) --clear bottom screen
+	Graphics_initBlend() --clear bottom screen
 	Graphics_termBlend()
 end	
 
@@ -686,7 +686,7 @@ while true do
 				menu_selector = math.min(4,menu_selector+1)
 			end
 			
-			Graphics_initBlend(TOP_SCREEN)
+			Graphics_initBlend()
 			
 			Graphics_fillRect(0, 400, 0, 240, themedb.bg[theme])
 			Graphics_drawPartialImage(0,0, 0,0, 256,64, img_menu_logo, themedb.bullet[theme])
@@ -795,7 +795,7 @@ while true do
 				menu_selector = math.min(2,menu_selector+1)
 			end
 			
-			Graphics_initBlend(TOP_SCREEN)
+			Graphics_initBlend()
 			
 			Graphics_fillRect(0, 400, 0, 240, themedb.bg[theme])
 			Graphics_drawPartialImage(0,0, 0,0, 256,64, img_menu_logo_options, themedb.bullet[theme])
@@ -879,7 +879,7 @@ while true do
 				game_init()
 			end
 			
-			Graphics_initBlend(TOP_SCREEN)
+			Graphics_initBlend()
 			Graphics_fillRect(0, 400, 0, 240, themedb.bg[theme])
 			Graphics_drawPartialImage(0,0, 0,0, 256,64, img_menu_logo, themedb.bullet[theme])
 			Graphics_drawPartialImage(0,0, 256,0, 256,64, img_menu_logo, themedb.enemy[theme])
@@ -906,7 +906,7 @@ while true do
 				menu_selector = math.min(3,menu_selector+1)
 			end
 			
-			Graphics_initBlend(TOP_SCREEN)
+			Graphics_initBlend()
 			Graphics_fillRect(0, 400, 0, 240, themedb.bg[theme])
 			Graphics_drawPartialImage(0,0, 0,0, 256,64, img_menu_logo_options, themedb.bullet[theme])
 			Graphics_drawPartialImage(0,0, 256,0, 256,64, img_menu_logo_options, themedb.enemy[theme])
@@ -951,7 +951,6 @@ while true do
 			
 		end
 		Screen_flip()
-	-- WORKED TILL HERE BELOW IS NON PORTED CONTENT	
 	else --GAMEPLAY \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\		
 		--player controls
 		if player_alive==true then
@@ -1032,7 +1031,7 @@ while true do
 			end
 		end
 		
-		Graphics_initBlend(TOP_SCREEN) --\\\\\
+		Graphics_initBlend() --\\\\\ MONKEY
 		
 		Graphics_fillRect(0, 400, 0, 240, themedb.bg[theme])
 		--OBJECT EVENT LIST \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -1810,10 +1809,10 @@ while true do
 			local px=player_x
 			local py=player_y
 			local col={}
-			col[1]=Screen.getPixel(px, py-1, TOP_SCREEN);
-			col[2]=Screen.getPixel(px, py+1, TOP_SCREEN); 
-			col[3]=Screen.getPixel(px-1, py, TOP_SCREEN); 
-			col[4]=Screen.getPixel(px+1, py, TOP_SCREEN);
+			col[1]=Screen.getPixel(px, py-1);
+			col[2]=Screen.getPixel(px, py+1); 
+			col[3]=Screen.getPixel(px-1, py); 
+			col[4]=Screen.getPixel(px+1, py);
 			local i=1
 			while i<5 do
 				local c = Color.getB(col[i])
@@ -1827,7 +1826,7 @@ while true do
 		end
 		
 		--GUI DRAW PHASE \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-		Graphics_initBlend(BOTTOM_SCREEN)
+		Graphics_initBlend()
 		gpu_drawtext(48,5, tostring(score), themedb.bullet[theme])
 		Graphics_drawImage(8, 8, img_score, themedb.bullet[theme])
 		fps_draw()
